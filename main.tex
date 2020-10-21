@@ -1,0 +1,910 @@
+\documentclass[12pt]{report}
+
+\usepackage[body={6in,9 in}, top=1 in, left=1in, bottom=1in, right=1in, nohead]{geometry}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage[all,2cell,ps]{xy}
+\usepackage{setspace} % for doublespacing
+\usepackage{titlesec}
+\usepackage[titles]{tocloft}
+\usepackage{ragged2e}
+\usepackage{indentfirst}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+\usepackage{enumitem, kantlipsum}
+
+\renewcommand{\bibname}{REFERENCES}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\setlength{\RaggedRightParindent}{\parindent}
+\RaggedRight
+
+\titleformat{\chapter}[display]{\bfseries \center}{CHAPTER \thechapter}{.25cm}{ }[ ]
+\titleformat{\section}[hang]{\bfseries \center}{\thesection.}{.25cm}{ }[ ]
+\titlespacing{\chapter}{0pt}{-.5in}{.5in}
+
+\doublespacing
+
+
+\newtheoremstyle{newthm} % name
+     {2pt}%      Space above
+     {2pt}%      Space below
+     {}%         Body font
+     {}%         Indent amount (empty = no indent, \parindent = para indent)
+     {\bfseries}%         Thm head font
+     {.}%        Punctuation after thm head
+     {.5em}%     Space after thm head: " " = normal interword space; \newline = linebreak
+     {}%         Thm head spec (can be left empty, meaning `normal')
+
+\theoremstyle{newthm}
+\newtheorem{lem}{\textbf{Lemma}}[section]
+\newtheorem{Proposition}[lem]{Proposition}
+\newtheorem{Theorem}[lem]{Theorem}
+\newtheorem{fact}[lem]{Fact}
+\newtheorem{Definition}[lem]{Definition}
+\newtheorem{Corollary}[lem]{Corollary}
+\newtheorem{Example}[lem]{Example}
+\newtheorem{Remark}[lem]{Remark}
+\newtheorem{Conjecture}[lem]{Conjecture}
+\newtheorem{Lemma}[lem]{Lemma}
+\newtheorem{prop}[lem]{Proposition}
+
+\crefname{Theorem}{Theorem}{Theorems}
+\crefname{Proposition}{Proposition}{Propositions}
+\crefname{Definition}{Definition}{Definitions}
+\crefname{Corollary}{Corollary}{Corollaries}
+\crefname{Example}{Example}{Examples}
+\crefname{Remark}{Remark}{Remarks}
+\crefname{Conjecture}{Conjecture}{Conjectures}
+\crefname{Lemma}{Lemma}{Lemmas}
+\crefname{prop}{Proposition}{Propositions}
+\setlength{\parindent}{.5in}
+\setlength{\footskip}{.4in}
+
+\def\thesection{\arabic{section}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Orbit}{Orbit}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\character}{char}
+\begin{document}
+
+
+\let \savenumberline \numberline
+\def \numberline#1{\savenumberline{#1.}}
+
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cftchapfont}{\mdseries}
+\renewcommand{\cftchappagefont}{\mdseries}
+
+%\tableofcontents 
+
+\newpage
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+%\include{titlepage}
+\pagenumbering{roman}
+\thispagestyle{empty}
+\centerline{\textbf{GROUPS SATISFYING THE CONVERSE TO LAGRANGE'S THEOREM}}
+\begin{center}
+    \\~\\~\\~\\~\\ 
+    A Master's Thesis \\
+    Presented to \\
+    The Graduate College of \\
+    Missouri State University
+    \\~\\~\\~\\~\\
+    In partial Fulfillment \\
+    Of the Requirements for the Degree\\
+    Master of Science, Mathematics 
+    \\~\\~\\~\\~\\
+    By\\
+    Jonah Henry\\
+    December 2019
+\end{center}
+\newpage
+%\include{abstract} 
+\noindent\textbf{GROUPS SATISFYING THE CONVERSE TO LAGRANGE'S \\\noindent THEOREM}\\
+\noindent Mathematics\\
+\noindent December 2019\\
+\noindent Master of Science\\
+\noindent Jonah Henry \\
+\\~\\
+\noindent\textbf{ABSTRACT}\bigskip
+\begin{spacing}{1}
+\noindent  Lagrange’s theorem, which is taught early on in group theory courses, states that the order of a subgroup must divide the order of the group which contains it. In this thesis, we consider the converse to this statement. A group satisfying the converse to Lagrange's theorem is called a CLT group. We begin with results that help show that a group is CLT, and explore basic CLT groups with examples. We then give the conditions to guarantee either CLT is satisfied or a non-CLT group exists for more advanced cases. Additionally, we show that CLT groups are properly contained between supersolvable and solvable groups.
+\end{spacing}
+\\
+\noindent\textbf{KEYWORDS:} lagrange, group, subgroup, order, index
+\newpage
+
+%\include{acceptance}
+\centerline{\textbf{GROUPS SATISFYING THE CONVERSE TO LAGRANGE'S THEOREM}}
+\\~\\~\\
+\begin{center}
+   By\\
+   Jonah Henry\\~\\~\\
+   \begin{spacing}{1}
+   A Master's Thesis\\
+   Submitted to the Graduate College\\
+   Of Missouri State University\\
+   In Partial Fulfillment of the Requirements \\
+   For the Degree of Master of Science, Mathematics
+   \end{spacing}
+   \\~\\~\\
+   December 2019
+\end{center}
+\\~\\
+
+\noindent Approved:\\
+\noindent Les Reid, Ph.D., Thesis Committee Co-Chair\\
+\noindent Richard Belshoff, Ph.D., Thesis Committee Co-Chair\\
+\noindent Mark Rogers, Ph.D., Thesis Committee Member\\
+\noindent Julie Masterson, Ph.D., Dean of the Graduate College
+\\~\\~\\~\\
+\begin{spacing}{1}
+\noindent In the interest of academic freedom and the principle of free speech, approval of this thesis indicates the format is acceptable and meets the academic criteria for the discipline as determined by the faculty that constitute the thesis committee. The content and views expressed in this thesis are those of the student-scholar and are not endorsed by Missouri State University, its Graduate College, or its employees.
+
+\end{spacing}
+\newpage
+%\include{dedication}
+\centerline{\textbf{ACKNOWLEDGEMENTS}}\\~\\
+I would like to thank all of my professors from throughout my time at Missouri State University. In particular, I would like to thank Dr. Reid and Dr. Belshoff for their guidance and endless support on this thesis. Additionally, I would like to thank Dr. Rogers for his time and effort outside of this project. Finally, my gratitude extends to my family and friends for all their love and support throughout the course of my studies.
+\\~\\
+\begin{center}
+I dedicate this thesis to my parents.
+\end{center}
+
+\newpage
+
+\tableofcontents
+\newpage
+%%%%%%% PRELIMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{arabic}
+\doublespacing
+
+
+\begin{comment}
+
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{verbatim}
+ 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Orbit}{Orbit}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\character}{char}
+\usepackage{parskip}
+\parskip 0pt
+\usepackage{indentfirst}
+\setlength{\parindent}{.5in}
+\newtheorem{lem}{Lemma}
+\newenvironment{Theorem}[2][\textsc{Theorem}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{Lemma}[2][\textsc{Lemma}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{prop}[2][\textsc{Proposition}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{Definition}[2][\textsc{Definition}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}{\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries +1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{Proposition}[2][\textsc{Proposition}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{Corollary}[2][\textsc{Corollary}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}\hskip \labelsep {\mdseries #2:}]}{\end{trivlist}}
+\newenvironment{Example}[2][\textsc{Example}]{\begin{trivlist}
+\item[\hskip \labelsep {\mdseries #1}{\mdseries #2:}]}{\end{trivlist}}
+\usepackage{times}
+
+\ignorespacesafterend
+\end{comment}
+
+ 
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+%\renewcommand{\qedsymbol}{\filledbox}
+%\setcounter{section}{-1}
+\linespread{2}
+\section{INTRODUCTION}
+\par One way of thinking of groups is as collections of symmetries. The dihedral group $D_{2n}$ contains the symmetries of a regular $n$-gon, including rotations and reflections. If we restrict to the rotations of a regular $n$-gon, we have the cyclic group $C_n$. The symmetric group $S_n$ consists of all the re-orderings of $n$ items. Every group contains a trivial action. For each action in the group, there is an opposite action that, when combined with the original, yields the trivial action. A more rigorous definition is a nonempty set along with a closed, associative binary operation that contains an identity and inverses for each element.
+\par Group theory has roots in studying permutations. Consider a function\\ \noindent$\phi(x_1, x_2\dotsc,x_n)$. For example, let $\phi(x_1,x_2,x_3) = x_1+x_2+x_3^3$. We can shuffle the variables to obtain a permutation of $\phi$, such as $\phi(x_2,x_1,x_3)$ which permuted $x_1$ and $x_2$. There are 3!=6 possible ways to re-order $x_1,x_2,x_3$. However, it is easy to see that the only distinct permutations of $\phi$ are $x_1+x_2+x_3^3$, $x_1+x_3+x_2^3$, and $x_2+x_3+x_1^3$. In 1770, Lagrange showed by example that for a function $\phi$ which takes $n$ variables, if $d$ is the number of distinct permutations of $\phi$, then $d$ divides $n!$. This development was in a time before group theory was a recognized branch of mathematics. The modern theorem of Lagrange deals with the orders of groups and subgroups, and can be used to prove his original claim. In this paper, we investigate the converse to this statement.
+\par In Section 2, we cover preliminary group theory results, and introduce Lagrange's Theorem as well as its converse. We define CLT (converse to Lagrange's theorem) groups, and show that not every finite group satisfies CLT. Additionally, we cover partial statements of CLT, given by Sylow's and Cauchy's Theorems. Sections 3, 4, and 6 show that CLT is satisfied for certain classes of groups, with basic results covered in Section 3, and more advanced ones left for Sections 4 and 6. In Section 5, we show that CLT groups are contained between supersolvable and solvable groups.
+\newpage
+%%%%%%% PRELIMS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{PRELIMINARIES AND BASIC RESULTS}
+
+
+
+Lagrange's Theorem, which is taught early on in introductory group theory courses, is stated as follows.
+
+\begin{Theorem} Let $G$ be a finite group. Then the order of every subgroup $H$ of $G$ divides the order of $G$.
+\end{Theorem}
+\begin{proof}
+Let $N\leq G$ and $G$ act on $G/N$ by left multiplication. Then \begin{center}$\Orbit(N)=\{gN\;\mid\;g\in G\} = G/N$, \\ $\Stab(N)=\{g\in G\;\mid\; gN=N\}=N$.\end{center} And so we have \begin{align*}
+    |G| &= |\Stab(N)||\Orbit(N)|\\
+    &= |N||G/N| \\
+    &= |N|[G:N].
+\end{align*}
+So the order of $N$ divides the order of $G$.
+\end{proof}
+
+
+The proof, in fact, reveals an even stronger result than the theorem. Not only does the order of a subgroup divide the order of the whole, but for a group $G$ with $H\leq G$, we know that $|G|=|H|[G:H]$. 
+A corollary to  Lagrange's theorem is that, for a finite group $G$ and $x\in G$, the order of $x$ divides the order of $G$. If $d$ is the order of $x$, then the cyclic subgroup $\langle x \rangle = \{1,\;x\;x^2,\dotsc ,\; x^{d-1}\}$ has order $d$. By the theorem, $d$ divides the order of $G$.
+
+\begin{Definition} 
+Let $G$ be a group. Then the \textit{automorphism group of $G$}, denoted $\Aut(G)$, is the group of isomorphisms from $G$ to itself.
+\end{Definition}
+
+\begin{Definition}
+Let $G$ be a group with subgroup $H$. If $\phi(H)=H$ for every $\phi$ in $\Aut(G)$, then $H$ is \textit{characteristic} in $G$.
+\end{Definition}
+
+\par Let $G$ be some group with $H\leq G$ and, for each $g\in G$, define $\phi_g\in\Aut(G)$ to be conjugation by $g$. If $\phi_g(H)=gHg^{-1}= H$ for each $\phi_g$, then $H$ is \textit{normal} in $G$, for which we use the notation $H\trianglelefteq G$. It is easy to show that if $H$ is characteristic in $G$, then it is normal. This is because conjugation is an automorphism. We also have the following.
+\begin{Proposition}\label{norm in char} Let $G$ be a group such that $H$ is normal in $G$ and $K$ is characteristic in $H$. Then $K$ is normal in $G$.
+\end{Proposition}
+
+\begin{proof} We have $H\trianglelefteq G$, and so, for $g\in G$, $\phi_g: H \rightarrow H$ given by $\phi_g(h)=ghg^{-1}$ is an automorphism of $H$. Since $K$ is characteristic in $H$, $\phi_g(K)=K$ for each $g\in G$, and so $K\trianglelefteq G.$
+\end{proof}
+
+\begin{Definition}
+For a group $G$ and $N\trianglelefteq G$, the \textit{quotient group} of $N$ in $G$ is the set of cosets of $N$ in $G$, and $aNbN=abN$. This is denoted $G/N$, and $|G/N|=[G:N]$.
+\end{Definition}
+
+\begin{Theorem}(Cauchy's Theorem) Let $G$ be a finite group. If $p$ is prime and $p$ divides the order of $G$, then there exists an element of $G$ which has order $p$.
+\end{Theorem}
+
+Cauchy's Theorem is useful because for each prime dividing the order of a group, we are guaranteed a subgroup of that order. If $G$ is a group and $p$ is some prime dividing the order of the group, then we are guaranteed that there is an element $x\in G$ that has order $p$. Then the cyclic group generated by $x$ is a subgroup of $G$ with order $p$.
+
+\begin{Definition} Let $G$ be a group and $H\leq G$. We define the following subgroups:\\
+{\singlespacing
+\begin{enumerate}[nosep]
+    \item The \textit{center} of $H$, denoted $Z(H)$, is the set of elements $x\in H$ that commute with every element in $H$.
+    \item The \textit{centralizer} of $H$ in $G$, denoted $C_G(H)$, is the set of elements $x\in G$ that commute with every element of $H$. 
+    \item The \textit{normalizer} of $H$ in $G$, denoted $N_G(H)$, is the set of elements in $x\in G$ such that $xHx^{-1}=H$.
+\end{enumerate}
+}
+\end{Definition}
+
+It is easy to show that $Z(H)\leq C_G(H)\leq N_G(H)$: Let $x\in Z(H)$. Then $xy~=~yx$ for all $y\in H$. But by definition, $x\in H\leq G$. So $x$ is an element of $G$ which commutes with the elements in $H$, and so $x\in C_G(H)$. \\Now, suppose $x\in C_G(H)$ and let $y\in H$. Then $xyx^{-1}=yxx^{-1}=y\in H$, demonstrating that $x\in N_G(H)$.
+
+\begin{Definition} Let $G$ be a finite group and $p$ prime. If $p^m$ is the highest power of $p$ which divides the order of $G$, then a subgroup of $G$ of order $p^m$ is called a \textit{Sylow $p$-subgroup}. The set of all Sylow $p$-subgroups for $G$ is denoted $\Syl_p(G)$.
+\end{Definition}
+
+\begin{Theorem}(Sylow's Theorem)\\
+{\singlespacing
+\begin{enumerate}[nosep]
+    \item Let $G$ be a finite group and $p$ some prime. If $p$ divides the order of $G$, then $G$ has a Sylow $p$-subgroup.
+    \item Let $G$ be a finite group and $p$ some prime. Then all Sylow $p$-subgroups are conjugate to each other.
+    \item Let $p$ be a prime factor of a finite group $G$ such that $n$ is the highest power of $p$ dividing $|G|$. Then $|G|=p^nm$ for some $m$. Let $n_p$ be the number of Sylow $p$-subgroups in $G$. Then $n_p$ divides $m$ and $p$ divides $n_p-1$.
+\end{enumerate}
+}
+\end{Theorem}
+
+\begin{Proposition}\label{normal sylow}
+Let $G$ be a finite group and $p$ some prime such that $P\in \Syl_p(G)$. Then $P$ is normal in $G$ if and only if $n_p=1$.
+\end{Proposition}
+
+\begin{proof}
+If $P$ is the only Sylow $p$-subgroup of a group $G$, then $gPg^{-1}$ is another subgroup of the same order, so $gPg^{-1}=P$ for all $g\in G$. So $P\trianglelefteq G$. Conversely, if $P$ is normal in $G$, then by part 2 of Sylow's Theorem, every Sylow $p$-subgroup is a conjugate of $P$, and so must be $P$ itself. And so it is unique and $n_p=1$.
+\end{proof}
+
+Let the order of a group $G$ have prime factorization $p_1^{a_1}p_2^{a_2}\dots p_n^{a_n}$. Cauchy's Theorem provides us with subgroups of orders $p_1, p_1, \dotsc , p_n$ while part one of Sylow's Theorem shows the existence of subgroups of orders $p_1^{a_1}, p_2^{a_2},\dotsc p_n^{a_n}$. We will now consider an example.
+
+
+\begin{Theorem}(Third Isomorphism Theorem)
+Suppose $G$ is a group with normal subgroups $H$ and $N$ such that $N$ is a subgroup of $H$. Then $N$ is normal in $H$ and \begin{center}{$(G/N)/(H/N)\cong G/H$}. \end{center}
+\end{Theorem}
+
+\begin{Theorem}(Lattice Isomorphism Theorem) Let $G$ be a group and $N\trianglelefteq G$. Then there exists a bijection between the set of subgroups of $G$ containing $N$ and set of subgroups of $G/N$. Also, $K/N\trianglelefteq G/N$ if and only if $K\trianglelefteq G$.
+\end{Theorem}
+
+The proofs of the previous two results can be found at \cite[pg 98]{DF} and \cite[pg 99]{DF} respectively.
+
+
+\begin{Definition} A \textit{subnormal series} of a group $G$ is a sequence of subgroups \begin{center}
+    $1 = G_0\trianglelefteq G_1\trianglelefteq\dotsi\trianglelefteq G_n = G$
+\end{center}
+such that each $G_i$ is normal in $G_{i+1}$. If each $G_i$ is also normal in $G$ ,then this chain is called a \textit{normal series}.
+\end{Definition}
+
+
+\begin{Definition} A group $G$ is \textit{solvable} if it has a normal series whose quotient groups $G_{i+1}/G_i$ are all abelian.
+
+\begin{Remark}An equivalent definition of a solvable group is a group $G$ with subnormal series $1=G_0\trianglelefteq\dotsi\trianglelefteq G_n=G$ such that each $G_{i+1}/G_i$ is cyclic.
+\end{Remark}
+
+\begin{Definition}
+A group $G$ is \textit{supersolvable} if it has a normal series whose quotient groups $G_{i+1}/G_i$ are all cyclic.
+\end{Definition}
+
+Note that it is easy to show that a supersolvable group is solvable, since cyclic groups are abelian.
+
+\begin{Definition}
+Suppose $G$ and $H$ are groups such that $\phi:G\rightarrow \Aut(H)$ is a homomorphism. Then the \textit{semi-direct product} of $H$ and $G$ with respect to $\phi$, denoted $H\rtimes_\phi G$ is the cartesian product $H\times G$ with the rule $(h,g)(h',g')=(h(\phi(g)[h']),gg')$
+\end{Definition}
+
+Whenever $\phi$ is the trivial homomorphism, then this is precisely the direct product of $H$ and $G$. And so semi-direct products are a richer generalization of the direct product. Suppose there exist subgroups $H, N$ of a group $G$ where $N\trianglelefteq G$, $H\cap N=\{e\}$, and $G = NH$, the inner semi-direct product defined for some $\phi$. Then $G\cong N\rtimes_\phi H$. If we also have that $H\trianglelefteq G$, then $G\cong N\times H$.
+
+\par The converse to Lagrange's theorem is that for a finite group $G$, if $d$ divides $G$, then there exists a subgroup $H\leq G$ of order $d$. This is not true in general, as we will demonstrate in the following example.
+
+\begin{Example}\label{A4}   
+Consider the alternating group $A_4$, which has order 12. If the converse to Lagrange's theorem were true, then there would exist a subgroup $H\leq A_4$ with order 6. Assume such an $H$ exists. Then $H$ has index 2. Thus the two cosets are $H$ and $G-H$. If $g\in H$, then $gH=H=Hg$. If $g\not\in H$, then $gH=G-H=Hg$, and so $H\trianglelefteq G$ . Hence $|A_4/H|=[A_4:H]=2$ and so for any $s\in G$, we have $s^2H=(sH)^2 = H$. Let $s$ be some 3-cycle. Then $s=(s^2)^2$, so $s\in H$. But there are 8 3-cycles in $A_4$, contradicting the fact that $|H|=6$.
+\end{Example}
+
+\begin{Definition}
+A finite group which satisfies the converse to Lagrange's theorem is called a \textit{CLT group}. Note that these groups are often called Lagrangian.
+\end{Definition}
+
+In order to show that a finite group $G$ is a CLT group, we let $d$ be an arbitrary divisor of $|G|$, and show that there exists a subgroup $H$ of $G$ with order $d$.
+
+\end{Definition}
+
+\begin{Proposition}\label{S4 CLT}
+The symmetric group $S_4$ is a CLT group.
+\end{Proposition}
+
+\begin{proof}
+$S_4$ has order $4!=24$, which has prime factorization $2^3\cdot 3.$ The divisors of this are 1, 2, 3, 4, 6, 8, 12, 24. Subgroups of order 1 and 24 clearly exist, as they are the identity and whole of $S_4$ respectively. Cauchy's Theorem provides the existence of subgroups with orders 2 and 3, while Sylow's Theorem gives us a subgroups of order $2^3 = 8$. This leaves us to find subgroups of orders 4, 6 and 12.  The Klein four-group, which consists of the identity and double transpositions, is a subgroup of order 4.  The alternating group $A_4$ is a subgroup of order 12.  Finally, the symmetric group $S_3$ is embedded in $S_4$ and has order 6. We have now found a subgroup for each divisor of $|S_4|$, and so $S_4$ is indeed a CLT group.
+\end{proof}
+
+\begin{Lemma}\label{sum lemma}
+For $x,y_i\in\mathbb{R}$, if $x\leq\sum\limits_{i=1}^n y_i$, then there exist $x_1,\dotsc,x_n\in\mathbb{R}$ such that $x=\sum\limits_{i=1}^n x_i$ and $x_i\leq y_i$ for each $i$.
+\end{Lemma}
+
+\begin{proof}
+There exists $l\leq n$ such that $\sum\limits_{i=1}^{l-1}y_i\leq x \leq \sum\limits_{i=1}^{l}y_i$. Now, for each $i$, define
+
+\begin{center}
+    $x_j$ =   $\left\{
+\begin{array}{ll}
+y_j & j < l \\
+      x - \sum\limits_{i=1}^{l-1}y_i & j = l \\
+      0 & j>l
+\end{array} 
+\right. $
+\end{center}
+Then clearly $x_i\leq y_i$ for $i\neq l$, and $x_l=x - \sum\limits_{i=1}^{l-1}y_i \leq
+\sum\limits_{i=1}^{l}y_i- \sum\limits_{i=1}^{l-1}y_i = y_l$. Furthermore, $x=\sum\limits_{i=1}^n x_i$.
+\end{proof}
+
+\begin{Proposition}\label{div prod}
+If $a\mid\prod\limits_{i=1}^k n_i$, then there exist $a_1,a_2,\dotsc, a_k$ such that $a=\prod\limits_{i=1}^k a_i$ and $a_i\mid n_i$ for each $i$.
+\end{Proposition}
+
+\begin{proof}
+Let $p_1^{\alpha_{i,1}}\dotsi p_r^{\alpha_{i,r}}$ be the prime factorization of each $n_i$. Then the prime factorization of $n_1n_2\dotsi n_k$ is $p_1^{\sum_{i=1}^k \alpha_{i,1}}\dotsi p_r^{\sum_{i=1}^k \alpha_{i,r}}$. Let $a=p_1^{\beta_1}\dotsi p_r^{\beta_r}$. Then we have $0\leq \beta_i\leq \sum\limits_{i=1}^k \alpha_{i,r}$ for $i=1,\dotsc, k$. By \cref{sum lemma}, we have $\beta_{i,j}$ such that $\beta_j=\sum\limits_{i=1}^k \beta_{i,j}$ and $\beta_{i,j}\leq \alpha_{i,j}$. Now for each $i$, take $a_i =  p_1^{\beta_{i_1}}\dotsi p_r^{\beta_{i,r}}$ . Then $a=a_1\dotsi a_k$ and each $a_i\mid n_i$.
+\end{proof}
+
+\begin{Definition} A number $N$ is said to be \textit{square-free} if its prime factorization contains only one occurrence of each prime.  
+\end{Definition}
+
+\begin{prop}\label{sq-alt}
+An alternate definition for a square-free integer $N$ is if whenever $d^2|N$, then $d^2=1$. 
+\end{prop}
+\begin{proof}
+We will prove that the two definitions of square-free are equivalent. \\
+($\Rightarrow$) Let $N=p_1p_2\dotsc p_k$, and suppose that $d^2\mid N$ but $d^2\neq1$. Then $d\neq 1$ and $d\mid N$, so $d$ shares prime divisors with $N$. Without loss of generality, let $d=p_1$. Then $d^2=p_1^2$, so $p_1^2\mid N$, contradicting our assumption. So we must have $d^2=1$, showing $d^2\mid N \Rightarrow d^2=1$. \\
+($\Leftarrow$) We will show the contrapositive is true. Let $N=p_1^{a_1}\dots p_k^{a_k}$, where at least one $a_i>1$. Without loss of generality, assume $a_1>1$. Then $p_1^2\mid N$. But $p_1\neq 1$. Hence \\$d^2|N\not\Rightarrow d^2=1$. So we must have $a_1=a_2=\dotsc = a_k =1.$ Thus the definitions are equivalent. 
+\end{proof}
+%%%%%% CLT GROUPS AND PROPERTIES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{ELEMENTARY CLT GROUPS AND PROPERTIES}
+ 
+For this and the remaining sections, groups are assumed to be finite.
+ 
+\begin{prop}\label{Cyclic CLT} Cyclic Groups are CLT.
+\end{prop}
+
+\begin{proof}
+Let $G=\langle x \rangle$ be a cyclic group of order $n$, and let $d|n$. Then $n=md$ for some $m$. And so $H = \langle x^m\rangle$ is a subgroup of $G$ such that $|H|=d$. Hence $G$ is a CLT group. 
+\end{proof}
+
+
+\begin{prop}\label{Abelian CLT} Abelian groups are CLT.
+\end{prop}
+
+\begin{proof}
+Let $G$ be abelian such that $|G|=p_1^{a_1}p_2^{a_2}\dotsi p_n^{a_n}$, where each $p_i$ is prime. Assume $d \mid |G_i|$. If  $d=1$, the result is trivial, so suppose $d>1$. Then $p_i\mid d$ for some $i$. By Cauchy's Theorem, for each $p_i$, there exists $H\trianglelefteq G$ with $|H|=p_i$. Note that $|G/H|<|G|$ since $H$ is nontrivial. Also ${d}/{p_i}\mid|G/H|$. By induction, there exists $N/H\leq G/H$ of order $d/p_i$. By the Lattice Isomorphism Theorem, this corresponds to $N\trianglelefteq G$ where $|N|=d.$ So $G$ is CLT.
+\end{proof}
+
+\begin{Lemma}\label{nontriv center} If $G=p^n$ for some prime $p$ and $n>0$, then $G$ has a nontrivial center.
+\end{Lemma}
+
+\begin{proof}
+Let $|G|=p^n$. If $G=Z(G)$, then we are done. So suppose $G\neq Z(G)$. From the class equation, $|G|= |Z(G)|+\sum_{i=1}^k[G:C_G(g_i)]$. Since each $g_i\not\in Z(G)$, $p|[G:C_G(g_i)]$. Otherwise, $G/{C_G(g_i)}$ would be trivial. It is also clear that $p\mid|G|$. Hence $p$ divides the order of $Z(G)$, and so $Z(G)$ is nontrivial. 
+\end{proof}
+
+\begin{Proposition}\label{p group lem} Let $|G|=p^n$ for some prime $p$ and $n>0$. If $p^\alpha\mid |G|$, then there exists $H\leq G$ such that $|H|=p^\alpha$. Furthermore, $H$ may be taken to be normal.
+\end{Proposition}
+
+\begin{proof}
+By \cref{nontriv center}, $|Z(G)|\neq 1$. That is, $|Z(G)|=p^\beta$, $\beta\neq 0$. From this, we have $|G/Z(G)|<|G|.$ If $\alpha\leq\beta$, then $p^\alpha\mid p^\beta$.  Note that $Z(G)$ is abelian and so CLT by \cref{Abelian CLT}. Hence there exists $H\leq Z(G)\leq G$ such that $|H|=p^\alpha$. Furthermore, $H\trianglelefteq G$, since $H$ is contained in $Z(G)$. Now suppose $\alpha>\beta$. Since the center is nontrivial, $|G/Z(G)| < |G|$. By induction, there exists a normal subgroup $H/Z(G)$ of $G/Z(G)$ such that $|H/Z(G)|=p^{\alpha-\beta}$. By the Lattice Isomorphism Theorem, $H\trianglelefteq G$, and $|H|=p^\alpha$. By \cite[pg 188]{DF}, $H$ may be chosen to be normal.
+\end{proof}
+
+\begin{Corollary}\label{p groups clt} Every $p$-group is CLT.
+\end{Corollary}
+
+\begin{proof}
+Let $G$ be a $p$-group, then $|G|=p^a$ for some prime $p$ and some $a$. Let $d$ divide the order of $G$. Then $d=p^b$, where $b\leq a$. Then by \cref{p group lem}, there exists a subgroup of $G$ of order $d$, and so $G$ is CLT.
+\end{proof}
+
+\begin{Corollary}\label{prime powers} If $G$ is a group with $p^\alpha\mid |G|$ for some prime $p$ , then there exists a subgroup $H$ of $G$ such that $|H|=p^\alpha$. 
+\end{Corollary}
+
+\begin{proof}
+Let $\beta$ be the highest power of $p$ dividing $|G|$. Then there exists $P\in\Syl_p(G)$, which is a $p$-group of order $p^\beta$. Since $\beta \geq \alpha$, $p^\alpha\mid p^\beta$. It follows from \cref{p groups clt} that there exists a subgroup of $G$ with order $p^\alpha$.
+\end{proof}
+
+This result generalizes Sylow's Theorem in that it guarantees $p$-subgroups for every power of each prime dividing the order of a group $G$, while Sylow's Theorem only gave us the existence of subgroups for the maximum powers of each prime dividing $|G|$.
+
+\begin{Theorem}\label{direct prod}
+A product of CLT groups is itself CLT.
+\end{Theorem}
+
+\begin{proof}
+We will prove this by inducting on the number of groups. Let $|G_1|=n_1$ and $|G_2|=n_2$. Then $|G_1\times G_2|=n_1n_2$. Let $a\mid n_1n_2$. By \cref{div prod}, there exist $a_1, a_2$ such that $a=a_1a_2$, $a_1\mid n_1$, and $a_2\mid n_2$. Since $G_1$ and $G_2$ are CLT, there exist $H_1\leq G_1$ and $H_2\leq G_2$ such that $|H_1|=a_1$ and $|H_2|=a_2$. Then $|H_1\times H_2| = a_1a_2=a$ and $H_1\times H_2\leq G_1\times G_2$. Now, assume $G_1,\dotsc\, G_n, G_{n+1}$ are CLT groups. By induction, $\prod\limits_{k=1}^{n}G_k$ is CLT. Then we have $\prod\limits_{k=1}^{n+1}G_k= (\prod\limits_{k=1}^n G_k)\times G_{n+1}$. This is the direct product of two CLT groups, and so is CLT. 
+\end{proof}
+
+We've shown CLT groups are closed under direct products. This is not the case, however, for subgroups or quotient of CLT groups.
+
+\begin{Example}
+\cref{S4 CLT} showed that $S_4$ is a CLT group. However, $A_4$, which is a subgroup of $S_4$ of order 12, has no subgroup of order 6, and so is is not CLT. This gives us an example of a non-CLT subgroup of a CLT group.
+\end{Example}
+
+\begin{Example}
+Consider $A_4\times C_2$. This has order $2^3\cdot3$. Finding subgroups of orders 1 and 24 is trivial. \cref{prime powers} gives us subgroups of order 2, 3, 4, and 8. Now, $A_4$ is a subgroup of order 12, and $A_3\times C_2$ is a subgroup of order 6. And so $A_4\times C_2$ is CLT. However, $(A_4\times C_2)/C_2 \cong A_4$ is not CLT, giving us an example of a CLT group with a CLT subgroup, whose quotient is not CLT. This is also an example of a product of two groups that is CLT, but only one of the factors is CLT.
+\end{Example}
+
+\subsection{Groups of Square-Free Order}
+\begin{prop}\label{pq clt} If $|G|=pq$ for some primes $p$ and $q$, then $G$ is CLT.
+\end{prop}
+
+\begin{proof}
+Subgroups of orders 1 and $pq$ clearly exist. Cauchy's Theorem gives us subgroups of orders $p$ and $q$.
+\end{proof}
+
+Here, we have an example of a group with square-free order. That is, $|G|$ is a square-free number, which we defined in the preliminary section as a number whose prime factors have multiplicity one. In this case, the prime factorization contained only two primes. As we will show, this result can be extended to any group with square-free order.
+
+\begin{Lemma}\label{G/N and N} Let $G$ be a group and $N\trianglelefteq G$. If $G/N$ and $N$ are both solvable, then $G$ is solvable.
+\end{Lemma}
+
+\begin{proof}
+Let $N\trianglelefteq G$ such that both $N$ and $G/N$ are solvable. Since $N$ and $G/N$ are each solvable, there exist subnormal series 
+\begin{center}
+    $1 = N_k \trianglelefteq \dotsi\trianglelefteq N_1=N$ \\
+    $1=G_j/N\trianglelefteq\dotsi\trianglelefteq G_1/N=G/N$
+\end{center}
+whose factor groups are each cyclic. By the Lattice Isomorphism Theorem and since each $G_{i+1}/N\trianglelefteq G_i/N$, we obtain subnormal series $N = G_j\trianglelefteq\dotsi\trianglelefteq G_1=G$. By the Third Isomorphism Theorem, each $G_i/G_{i+1}\cong (G_i/N)/G_{i+1}/N)$ is cyclic. And so we have our desired subnormal series 
+\begin{center}
+    $1=N_1\trianglelefteq\dotsi\trianglelefteq N_1=N=G_j\trianglelefteq \dotsi \trianglelefteq G_1= G$
+\end{center}
+with cyclic quotients. Hence $G$ is solvable.
+\end{proof}
+
+\begin{Definition}
+Let $G$ be a finite group where $p$ is a prime dividing the order of $G$, and $P\in \Syl_p(G).$ Then a normal \textit{$p$-complement}, $Q$, of $P$ is a normal subgroup of $G$ such that $P\cap Q = {1}$ and $PQ=G$.
+\end{Definition}
+
+\begin{Lemma}\label{Z(N_G(P))}\cite[pg 327]{Burnside} Let $P$ be a Sylow $p$-subgroup of a group $G$. If $P$ is a subgroup of $Z(N_G(P))$, then $P$ has a normal $p$-complement in $G$.
+
+\end{Lemma}
+
+\begin{Lemma}\label{exist p-comp} Let $p$ be the smallest prime dividing $|G|$. If $P\in \Syl_p(G)$ and $P$ is cyclic, then there exists a normal complement of $P$ in $G$.
+
+\end{Lemma}
+
+\begin{proof}
+Let $x\in N_G(P)$. Then $xPx^{-1}=P$. 
+Let $\phi: N_G(P)\rightarrow \Aut(P)$ be given by $\phi(x)= f_x$, where $f_x(g)=xgx^{-1}$. Now, $P$ is cyclic, so abelian, and hence $P\leq \ker\phi$. We have the induced homomorphism  \begin{center}
+    
+$\theta:N_G(P)/P\rightarrow \Aut(P)$.\end{center}
+Since $|P|=p^k$ is the highest power of $p$ dividing $|G|$, $p\nmid |N_G(P)/P|$. Any prime dividing the order of $N_G(P)/P$ must be greater than $p$. Now since $P$ is cyclic of order $p^k$, $|\Aut(P)|=(p-1)p^{k-1}$. Any prime factor of $|\Aut(P)|$ must therefore be less than or equal to $p$, and so $\gcd(|N_G(P)/P|,|\Aut(P)|)=1$, and thus $\theta$ is the trivial mapping. Let $g\in P$ and take $\theta(xP)[g]=xgx^{-1}=g$. It follows that $xg=gx$, and so $g\in Z(N_G(P))$. So $P\leq Z(N_G(P)).$ From \cref{Z(N_G(P))}, it follows that there exists a normal $p$-complement of $P$ in $G$.
+\end{proof}
+
+\begin{Theorem}\label{square free solvable} If $G$ has square-free order, then $G$ is solvable. 
+\end{Theorem}
+
+\begin{proof}
+Let $G$ be a group with square-free order. Let $|G|=p_1p_2\dots p_r$. We will induct on $r$.\\
+If $r=1$, then $|G|=p$, and so $G$ is cyclic, hence solvable. Assume the result is true for $r=k$. Now suppose that
+$r=k+1$. Then $|G|=p_1p_2\dots p_{k+1}$, where $p_1<p_2<\dots p_{k+1}$. By \cref{exist p-comp}, there exists $N\trianglelefteq G$ such that $|G/N|=p_1$. But $|N|=p_2\dots p_{k+1}$. By induction, $N$ is solvable. Also, $G/N$ is cyclic, and thus solvable. By \cref{G/N and N}, $G$ is solvable.
+\end{proof}
+
+\begin{Lemma}\label{mn=N} Suppose $N$ is square-free and $mn=N$. Then $\gcd(m,n)=1$.
+\end{Lemma}
+
+\begin{proof}
+Suppose $\gcd(m,n)=d$. Then $m=m'd$ and $n=n'd$. So $N=mn=m'n'd^2$. That is, $d^2\mid N$, and so $d^2=1$. By \cref{sq-alt}, $1=d=\gcd(m,n)$.
+\end{proof}
+
+\begin{Definition} Let $G$ be a finite group. If $H$ is a subgroup of $G$ whose order is relatively prime to its index in $G$, then $H$ is called a \textit{Hall subgroup}.
+\end{Definition}
+
+Sylow $p$-subgroups are Hall subgroups whose order has only one prime factor, while $p$-complements are Hall subgroups whose index has only one prime. The next result from Hall generalizes the existence of these subgroups in solvable groups.
+
+\begin{Theorem}\label{Hall}\cite[Theorem 9.3.1]{Hall} If $G$ is solvable and $|G|=mn$, where $m$ and $n$ are relatively prime, then there exists a Hall subgroup of $G$ of order $m$.
+\end{Theorem}
+
+
+\begin{Theorem}\label{square-free clt} A group $G$ of square-free order is a CLT group.
+\end{Theorem}
+
+\begin{proof}
+Let $G$ be a group of square-free order. By \cref{square free solvable}, $G$ is solvable. Suppose $m\mid |G|$. Then $|G| = mn$ for some $n$. By \cref{mn=N}, $m$ and $n$ are relatively prime. It follows by \cref{Hall} that $G$ has a Hall subgroup of order $m$. Hence $G$ is a CLT group.
+\end{proof}
+
+\subsection{Nilpotent Groups}
+\begin{Definition} A central series of a group $G$ is a series of subgroups \begin{center}
+$1=G_1\trianglelefteq\dotsi\trianglelefteq G_n=G$\end{center} such that each $G_{i+1}/G_i$ is contained in the center of $G/G_i$.
+\end{Definition}
+
+In a similar fashion to our definitions of supersolvable and solvable groups, we have a new classification.
+
+\begin{Definition} A group $G$ is called \textit{nilpotent} if it has a finite central series.
+\end{Definition}
+
+All abelian groups are nilpotent. A nonabelian example of a nilpotent group is the quaternion group, which has central series $\{1\}\trianglelefteq\{1, -1\}\trianglelefteq Q_8$. 
+
+\begin{Lemma}\label{normalizer property}\cite[Corollary 10.3.1]{Hall}
+Suppose $G$ is nilpotent and $H$ is  a proper subgroup of $G$. Then $H$ is a proper subgroup of $N_G(H)$. 
+\end{Lemma}
+
+This is the normalizer property, and it generalizes on a property of abelian groups: that every subgroup of an abelian group is normal.
+
+
+\begin{Theorem}\label{nilpotent equiv}\cite[pg 191]{DF}
+A group $G$ is nilpotent if and only if it is the direct product of its Sylow $p$-subgroups.
+\end{Theorem}
+
+\begin{proof}
+$(\Rightarrow$) Suppose $G$ is nilpotent. First, we will show that every Sylow $p$-subgroup of $G$ is normal. Let $P\in\Syl_p(G)$ for some $p\mid |G|$. Since $P\trianglelefteq N_G(P)$, it is unique in $N_G(P)$ of order $p^k$. Since automorphisms preserve orders, we get that $P$ is characteristic in $N_G(P)$. But $N_G(P)\trianglelefteq N_G(N_G(P))$. So by \cref{norm in char}, $P\trianglelefteq N_G(N_G(P))$. And so $N_G(N_G(P))\leq N_G(P)$, showing $N_G(N_G(P))=N_G(P)$. By \cref{normalizer property}, this means $N_G(P)$ cannot be a proper subgroup of $G$, and so $N_G(P)=G$. Thus $P\trianglelefteq G$. But if every Sylow $p$-subgroup of $G$ is normal in $G$, then $G$ is the direct product of them.\\
+($\Leftarrow$) Now, suppose  $G\cong P_1\times\dotsi\times P_n$ is the direct product of its Sylow $p$-subgroups. Note that $Z(P_1\times\dotsi\times P_n)\cong Z(P_1)\times\dotsi\times Z(P_n)$. Each $P_i$ is a $p$-group, so $Z(P_i)\neq 1$ by \cref{nontriv center}. If $G\neq 1$, then $|G/Z(G)| < |G|$. By induction, $G/Z(G)$ is nilpotent, giving us central series 
+\begin{center}$Z(G)/Z(G) = Z_1/Z(G)\trianglelefteq \dotsi\trianglelefteq Z_k/Z(G) = G/Z(G)$. \end{center} By the Third Isomorphism Theorem and Lattice Isomorphism Theorem, we have central series $1\trianglelefteq Z(G)\trianglelefteq Z_1\trianglelefteq\dotsi\trianglelefteq Z_k = G$, showing $G$ is nilpotent.
+\end{proof}
+
+Note that Sylow $p$-subgroups are $p$-groups, and are CLT by \cref{p groups clt}. Since $G$ is a finite direct product of these, it must be CLT by \cref{direct prod}. However, we will show a stronger result.
+
+
+\begin{Theorem}\label{nilpotent super clt} Let $G$ be nilpotent and $d$ divide the order of $G$. Then $G$ has a normal subgroup of order $d$.
+\end{Theorem}
+
+\begin{proof}
+Let $G$ be nilpotent such that $|G|=p_1^{a_1}\dotsi p_n^{a_n}$. Then each $P_i\in\Syl_{p_i}(G)$ is unique and thus normal in $G$. By \cref{nilpotent equiv}, $G\cong P_1\times P_2\times\dotsi P_n$, where $P_i\in \Syl_{p_i}(G)$. Let $d$ divide $|G|$. Then $d=p_1^{b_1}\dotsi p_n^{b_n}$, where $0\leq b_i\leq a_i$. By \cref{p group lem}, each $P_i$ has a normal subgroup $H_i$ of order $p_i^{b_i}.$ Take \begin{center}$H=H_1\times\dotsi\times H_n$.\end{center} Then $H$ is a normal subgroup of $G$ with order $d$.
+\end{proof}
+
+Therefore nilpotent groups satisfy a stronger version of CLT in that for each divisor $d$ of the order, there is a normal subgroup of order $d$.
+
+\newpage
+
+%%%%%%%%% p^2q  and p^2q^2%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{GROUPS OF ORDERS $p^2q$ AND $p^2q^2$}
+
+In the previous section, we showed that a group of order $pq$, where $p$ and $q$ are distinct primes, are CLT. We then generalized this result to any group having a square-free order. In this section, we will again restrict the prime factorization of the orders of our groups to two primes, except now with the condition that either one or both of the primes are squared.
+
+\subsection{Groups of Order $p^2q$}
+\begin{Definition} Let $A$ be an $n\times n$ matrix. Then the \textit{characteristic polynomial} of $A$ is given by  \begin{center}
+$\rho(\lambda)=\det(\lambda I - A)$
+\end{center} where $I$ is the $n\times n$ identity matrix.
+\end{Definition}
+\begin{Theorem}\label{Burnside p^aq^b}\cite[Theorem 9.3.2]{Hall} A group of order $p^aq^b$, where $p$ and $q$ are primes, is solvable. 
+
+\end{Theorem}
+\begin{Corollary}\label{p^aq^b} If $G$ is a group of order $p^aq^b$, where $p$ and $q$ are prime, then there exists $N\trianglelefteq G$ with index $p$ or~$q$. 
+\end{Corollary}
+
+\begin{proof}
+Since $G$ has order $p^aq^b$, it is solvable by \cref{Burnside p^aq^b}. Let $N$ be a maximal normal subgroup of $G$. Then $G/N$ is simple and solvable, and so cyclic of prime order. Hence $[G:N]=|G/N|=p$ or $q$.
+\end{proof}
+
+\begin{Lemma}\label{conj mat}
+Matrices that are conjugates of each other have the same characteristic polynomial. 
+\end{Lemma}
+
+\begin{proof}
+Let $A$ and $B$ be $n\times n$ matrices with corresponding characteristic polynomials $\rho_A(\lambda)$ and $\rho_B(\lambda)$. Suppose $A=RBR^{-1}$. That is, $A$ and $B$ are conjugates of each other. Then we have
+\begin{align*}
+    \rho_A(\lambda) &= \det(\lambda I-A) \\
+    &=\det(\lambda I -RBR^{-1})\\
+    &= \det(R\lambda I R^{-1} - RBR^{-1})\\
+    &= \det(R(\lambda I - B)R^{-1})\\
+    &= \det(R)\det(\lambda I - B)\det(R^{-1})\\
+    &= \det(\lambda I - B)\\
+    &= \rho_B(\lambda)
+\end{align*}
+\end{proof}
+
+\begin{Theorem}\label{p^2q}
+Let $G$ be a non-abelian group of order $p^2q$. Then $G$ is a CLT group if and only if $q\nmid p+1$ or $q=2$.
+\end{Theorem}
+
+\begin{proof}
+Suppose $G$ has order $p^2q$. By Sylow's Theorem, $G$ has subgroups of order $p^2$ and $q$. By Cauchy's Theorem, $G$ has a subgroup of order $p$. Hence $G$ is CLT if and only if it has a subgroup of order $pq$. Let $Q\in \Syl_q(G)$. By \cref{p^aq^b}, $G$ has a normal subgroup $N$ with prime index. If $[G:N]=p$, then $|N|=pq$, and so $G$ is a CLT group. If $[G:N]=q$, then $|N|=p^2$, and so $N\cong C_{p^2}$ or $N\cong C_p \times C_p$. Let $N\cong C_{p^2}$. Now, $C_p$ is characteristic in $G$, so $C_pQ\leq G$ and $|C_pQ|=pq$, showing that $G$ is CLT. Now, suppose $C_p\times C_p\cong N\trianglelefteq G$. We have $G\cong (C_p\times C_p)\rtimes_\phi C_q$ with $\phi:C_q\rightarrow \Aut(C_p\times C_p)\cong \GL_2(\mathbb{F}_p)$, and so
+\begin{align*}
+    |\Aut(C_p\times C_p)| &= |\GL_2(\mathbb{F}_p)| \\
+    &= (p^2-1)(p^2-p) \\
+    &= p(p-1)^2(p+1)
+\end{align*}
+If $\phi$ is trivial, then $G\cong C_p\times C_p \times C_q$, which contains $C_p\times C_p\times {1}$ as a subgroup of order $pq$. So we may assume $\phi$ is nontrivial. Let $x$ generate $C_q$ and $\phi$ map $x$ to $A\in \GL_2(\mathbb{F}_p)$. Then $A$ is a non-identity element of order $q$. By Lagrange's theorem, $q\mid p(p-1)^2(p+1)$. Clearly $q\nmid p$, so either $q\mid p+1$ or $q\mid p-1$.\\~\\
+Case 1: Suppose $A$ is not be diagonalizable. Then the Jordan Canonical Form of $A$ is $(\begin{smallmatrix}\alpha & 1\\ 0 & \alpha\end{smallmatrix})$. That is,
+\begin{center}
+    $A= R\begin{pmatrix} \alpha & 1\\0&\alpha \end{pmatrix}R^{-1}$.\end{center}
+    And in general, \begin{center}
+    $A^q=R\begin{pmatrix}\alpha^q & q\alpha^{q-1} \\ 0 & \alpha^q \end{pmatrix}R^{-1} = I$.
+\end{center} So we have $0=q\alpha^{q-1}\in \mathbb{F}_p$. Hence $p\mid q$, which contradicts the fact that $p$ and $q$ are distinct primes. So it is necessary that $A$ be diagonalizable. \\~\\
+Case 2: Now, suppose $A$ is diagonalizable.\; Then we have \begin{center}$A=R\begin{pmatrix}\alpha & 0\\ 0 & \beta\end{pmatrix}R^{-1}$.\end{center} That is,\begin{center} $A^q = R\begin{pmatrix}\alpha^q & 0\\ 0 & \beta^q\end{pmatrix}R^{-1}$.\end{center}\\~\\
+Case 2a: If $q\mid p-1$, then $\alpha^{p-1}=1$. So $\alpha\in (\mathbb{F}_p)^\times$. There exists $\Vec{u}\in\mathbb{F}_p^2$ such that $A\Vec{u}=\alpha\Vec{u}\in\langle\Vec{u}\rangle$. That is, $x\Vec{u}x^{-1}\in\langle\Vec{u}\rangle\cong C_p$. Hence $\langle x, \Vec{u}\rangle \cong C_p\rtimes C_q\leq G$ has order $pq$. And so $G$ is a CLT group. \\~\\
+Case 2b: Suppose $q\mid p+1$. Without loss of generality, we may assume that $q\nmid p-1$, otherwise 2a applies. That is, $q\neq 2$. By Cauchy's Theorem, there exists $A\in \GL_2(\mathbb{F}_p)$ of order $q$. We will now show that at least one of the eigenvalues of $A$ is contained in $\mathbb{F}_{p^2}-\mathbb{F}_p$. By way of contradiction, assume neither are. That is, $\alpha,\beta\in\mathbb{F}_p$. Since $A$ is invertible, $\alpha,\beta\neq 0$. So both are units. That is, they are contained in $\mathbb{F}_p^\times$, which has order $p-1$. By Lagrange's theorem, $\alpha^{p-1}=\beta^{p-1}=1$. But note that \begin{center} $I=A^q=R\begin{pmatrix}\alpha^q & 0 \\ 0 & \beta^q\end{pmatrix}$.\end{center}
+It follows that $\alpha^q=\beta^q=1$, but $q$ is the lowest power doing so. Hence $q\mid p-1$, contradicting our assumption. So either $\alpha $ or $\beta$ is contained in $\mathbb{F}_{p^2}-\mathbb{F}_p$. Without loss of generality, assume it is $\alpha$. We have \begin{align*}
+    \rho_A(\lambda) &= \det\begin{pmatrix} \lambda - \alpha & 0 \\ 0 & \lambda - \beta \end{pmatrix} \\
+    &= (\lambda - \alpha)(\lambda - \beta)\\
+    &= \lambda^2 - (\alpha+\beta)\lambda + \alpha\beta
+\end{align*}
+Since $x^2-(\alpha+\beta)x+\alpha\beta\in \mathbb{F}_p[x]$, it is true that $\alpha+\beta\in \mathbb{F}_p$. So we must have $\beta\not\in\mathbb{F}_p$. Otherwise, $\alpha=\alpha+\beta-\beta\in\mathbb{F}_p$, contradicting our assumption. Now, let $G= (C_p\times C_p)\rtimes_\phi C_q$ (where $c$ generates $C_q$) under the action $c\Vec{v}c^{-1}=A\Vec{v}$. Suppose $H$ is a subgroup of order $pq$. Let $\Vec{v}\in C_p\times C_p$ have order $p$. We need to find a vector of order $q$. Let $\Vec{w}\in C_p\times C_p$. Then $(\Vec{w}c)^q=(\Vec{w}+A\Vec{w}+\dotsi+ A^{q-1}\Vec{w})$. So $(A-I)(\Vec{w}c)^q=(A^q-I)\Vec{w}=0$. But note that
+\begin{align*}
+    \det(A-I)&= \det(R\begin{pmatrix}\alpha & 0 \\ 0 & \beta\end{pmatrix}R^{-1}-I)\\
+    &= \det\begin{pmatrix}\alpha-1 & 0 \\ 0 & \beta - 1\end{pmatrix}\\
+    &= (\alpha-1)(\beta-1) \\&\neq 0
+\end{align*}
+
+So we must have $(\Vec{w}c)^q=0$, showing $\Vec{w}c$ is an element of order $q$. Thus \begin{center}
+    $H=\langle \Vec{v}, \Vec{w}c\rangle$\end{center}, and so $\Vec{w}c\Vec{v}(\Vec{w}c)^{-1}\in H$. But \begin{align*}
+        \Vec{w}c\Vec{v}(\Vec{w}c)^{-1}&= \Vec{w}c\Vec{v}c^{-1}\Vec{w}\\&=\Vec{w}+c\Vec{v}c^{-1}+w^{-1}\\&= c\Vec{v}c^{-1}\\&=A\Vec{v}\neq\lambda\Vec{v},\end{align*} where $\lambda\in \mathbb{F}_p$. (We showed the eigenvalues of $A$ must be in $\mathbb{F}_{p^2}-\mathbb{F}_p$.) Thus $A\Vec{v}$ and $\Vec{v}$ are linearly independent, so $H$ has order $p^2q$, contradicting the assumed order of $H$. Therefore there cannot be a subgroup of order $pq$. Hence it is necessary that $q\nmid p+1$ or, if it does, then $q=2$.
+\end{proof}
+
+
+\begin{Example}
+Suppose $|G|=7^2\cdot3$. 3 divides 7-1 and, since $3\neq 2$, 3 does not divide 7+1. It suffices to show there is a subgroup of order $3\cdot 7=21$. Now, let $Q\in\Syl_3(G)$. By \ref{p^aq^b}, there exists $N\trianglelefteq G$ such that $[G:N]=3$ or $7$. If $[G:N]=7$, then $N=21$. Suppose $[G:N]=3$. Then $|N|=7^2$. So $N\cong C_{49}$ or $N\cong C_7\times C_7$. If $N\cong C_{49}$, then we have $C_{49}$. $C_7$ is characteristic in $N$, so $C_7Q\leq G$ has order $21$. Let $N\cong C_7\times C_7$. Then $G\cong (C_7\times C_7)\rtimes_\phi C_3$. Suppose $\phi$ is non-trivial, and let $x$ generate $C_3$. Then $\phi(x)=A\in GL_2(\mathbb{F}_7)$, where $A\neq I$. We have $A=R(\begin{smallmatrix}\alpha & 0 \\ \beta & 0\end{smallmatrix})R^{-1}$. But $A^3=I$. Since $3 \mid 7-1$, $A^{7-1}=I$. So $\alpha^{7-1}=1$, hence $\alpha\in(\mathbb{F}_7)^{\times}$. So there exists $\Vec{u}\in \mathbb{F_7}^2$ such that $A\Vec{u}=\alpha\Vec{u}\in\langle \Vec{u}\rangle\cong C_7$. And so $\langle x, \Vec{u}\rangle\cong C_3\times C_7\leq G$ has order $21$.
+\end{Example}
+
+\begin{Example}
+Let $C_3$ be generated by $x$ and suppose \begin{center}$\phi:C_3\rightarrow \Aut(C_5\times C_5)\cong \GL_2(\mathbb{F}_5)$ \end{center} maps $x$ to some $M\in \GL_2(\mathbb{F}_5)$. We have $C_5^2\rtimes_\phi C_3$ has order $5^2\cdot 3 = 75$. Then $M^3=\phi(x^n)=I$, so $M$ has order 3. Take \begin{align*}
+    M=\begin{pmatrix}0 & 1 \\ -1 & -1\end{pmatrix}.
+\end{align*}
+
+Note that $M^2+M+I=0$ and $M^4+M^2+I=0$. Let $v\in C_5\times C_5$ so that $( v, x^i)$ is in G. Then $i$ is either 0, 1, or 2. If $i=0$, then $( v, x^i)=( v, 1)$ has order 1 or 5. Now, note that 
+\begin{align*}
+    (v, x^i)^3 &= (v,x^i)^2\cdot(v,x^i)\\
+    &=(v+M^iv,x^2i)\cdot(x,v^i)\\
+    &=(v+M^iv+M^{2i}v,x^{3i})\\
+    &= ((I+M^i+M^{2I})v,1).
+\end{align*}
+If $i=1$ or $i=2$, then this is $(0,1)$, the identity. And so $(v, x^i)$ has order 3. Hence each element in $G$ has order of either 1, 3, or 5. Suppose there is a subgroup of $G$ with order 15. By Cauchy's Theorem, there is an element of order 15, a contradiction. There cannot be such a subgroup, and so $G$ is not CLT.
+
+\end{Example}
+
+\subsection{Groups of Order $p^2q^2$}
+
+We have now considered groups of order $pq$ and $p^2q$. A natural step would be to consider groups of order $p^2q^2$.
+
+\begin{Theorem}\label{p^2q^2} \cite[pg 2]{Baskaran} Let $G$ be a non-abelian group of order $p^2q^2$, where $p,q$ are primes with $q<p$. Then $G$ is non-CLT if and only if $q$ is odd and $q$ divides $p+1$.
+
+\end{Theorem}
+
+\begin{proof}
+$(\Leftarrow$) We have that $q<p$. By Sylow's Theorem, $n_p\equiv 1 \mod p$ and $n_p\mid q^2$. So $n_p=1$ or $q$ or $q^2$. We must have the $n_p=1$, and so $P\in \Syl_p(G)$ is normal. Now, suppose $G$ contains a subgroup $H$ of order $pq^2$. There exists $Q\in Syl_q(G)$ that is a subgroup of $H$. Since $q$ divides $p+1$, $q$ does not divide $p+1$, since it is odd. Now by Sylow's Theorem, $n_q=1$ or $p$. But $n_q\equiv 1 \mod q$. Since $q\nmid p-1$, we must have that $n_q=1$, and so $Q\trianglelefteq H$. And so the normalizer of $Q$ in $G$ is either $H$ or all of $G$. Hence we must either $[G:N_G(Q)]=1$ or $[G:N_G(Q)]=p$. It follows that the number of conjugates $n_q(G)$ of $Q$ is either 1 or $p$. If $n_q(G)=p$, then $p\equiv 1 \mod q$, contradicting $q$ being odd. And so $n_q(G)=1$, so $Q\trianglelefteq G$. Since $P, Q$ are normal in $G$ such that $P\cap Q = {1}$, $G\cong Q\times P$ is abelian, contradicting our assumption. Hence there cannot be a subgroup of $G$ of order $pq^2$, showing $G$ is non-CLT.\\
+$(\Rightarrow)$ Suppose $G$ is non-CLT. As shown in the first part of the proof, $G$ has a normal Sylow $p$-subgroup $P$. If $Q$ is some group of order $q$, then the product of $Q$ and $P$ is a subgroup of order $p^2q$. If $G$ contained a subgroup of order $pq^2$, then the intersection of it with a subgroup of order $p^2q$ would yield a subgroup of order $pq$, making $G$ CLT. And so there cannot be such a subgroup. Therefore there cannot be a normal subgroup in $G$ of order $p$, as its product with a Sylow $q$-subgroup would be one. $P$ is non-cyclic and so $G$ has $p+1$ subgroups of order $p$. Now, every subgroup of order $p$ is normal in $P$. If $H$ is a subgroup of order $p$, then $N_G(H)\geq N_P(H)=P$ (since $H\trianglelefteq P)$. Consequently, $|N_G(H)|\geq p^2$, and so $1< [G: N_G(H)]\leq q^2$. Now, $q$ divides the number of conjugates of $H$ which is equal to $q$ or $q^2$. And so $q\mid p+1$.
+\end{proof} 
+
+
+%%%%%%%% BRAY %%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{FURTHER CLASSIFICATION}
+Recall from the first section the definitions of supersolvable and solvable groups, and that all supersolvable groups are solvable. As we will show in this section, CLT groups are properly contained between supersolvable and solvable groups.
+
+\subsection{CLT Groups are Solvable}
+\begin{Lemma}\label{p comp div order}\cite[Theorem 9.3.3]{Hall} If a finite group $G$ contains a $p$-complement for every prime $p$ dividing its order, then $G$ is solvable. 
+\end{Lemma}
+
+Suppose $n_i$ is the maximum power for each prime $p_i$ such that $p_i^{n_i}$ divides the order of a group $G$. Then if $G$ has a subgroup with index $p_i^{n_i}$ for each $p_i$, then $G$ is solvable.  Now, recall the definition of a Hall subgroup: a subgroup whose order is relatively prime to its index.
+
+\begin{Lemma}\label{n_i for each i}\cite[Lemma 1]{Bray}  Let $|G|=n=p_1^{a_1}p_2^{a_2}\dotsi p_k^{a_k}$ and $n_i = n/p_i^{a_i}$ for each $i$. Then $G$ is solvable if and only if $G$ has a subgroup of order $n_i$ for each $i$.
+\end{Lemma}
+
+\begin{proof}
+($\Rightarrow$) Assume $G$ is solvable such that $G=n=p_1^{a_1}\dotsi p_n^{a_n}$. Take $n_i = n/{p_i^{a_i}}.$ Then $|G| = n_ip_i^{a_i}$ and $\gcd(n_i,p_i^{a_i})=1$. By \ref{Hall}, there exists a Hall subgroup of $G$ of order $n_i$.\\
+($\Leftarrow$) Let $|G|= n = p_1^{a_1}\dots p_n^{a_n}$ and suppose for each prime dividing the order of $G$, there exists a subgroup $H_i$ of $G$ of order $n/{p_i^{a_i}}$. Then $H_i$ is a $p$-complement for each $p_i$ dividing $G$. By \cref{p comp div order}, $G$ is solvable.
+\end{proof}
+With this result, we are now ready to show the first containment. 
+
+\begin{Theorem}\label{clt then solvable}\cite[Theorem 1]{Bray} All CLT groups are solvable.
+\end{Theorem}
+
+\begin{proof}
+Let $G$ be CLT. If $|G|=1$, then this is trivial. So assume $|G|=n$ has prime factorization $p_1^{a_1}\dotsc p_k^{a_k}$. Define $n_i = n/{p_i^{a_i}}$ for $i=1,\dotsc, k$. Each $n_i$ divides $n$ and so $G$ has a subgroup of order $n_i$ for each $i=1,\dotsc, k$. By \cref{n_i for each i}, $G$ is solvable. 
+\end{proof}
+
+\begin{Example}
+The converse to this is not true. For example, $A_4$ is solvable but note CLT. In general, if $H$ is a group of odd order, then $A_4\times H$ is solvable but is not CLT. Let $|H|=h$, where $h$ is odd. Note that $A_4$ is solvable. By the Feit-Thompson Theorem, $H$ is solvable. Hence $A_4\times H$ is solvable and $|A_4\times H|=12h$. We will now show that $A_4\times H$ does not have a subgroup of order $6h$. Suppose that such a group, $K$, exists. Then $[A_4\times H : K]=2$, and so $K$ is normal. Also, ${(A_4\times H)}/K$ has order 2, and hence is abelian. Let $g,h \in A_4\times H$. Then $ghK =hgK$, and so $g^{-1}h^{-1}ghK=K. $ Hence $[g,h]\in K$, showing $(A_4\times H)'=A_4'\times H' \leq K$. By Lagrange's theorem, $|A_4'|$ divides $|K|$. But $A_4'=\{(1), (12)(34), (13)(24), (14)(23)\}$, so $4\mid 6h$, which is a contradiction since $h$ is odd. Therefore, $A_4\times H$ cannot have a subgroup of order $6h$, and so is not a CLT group.
+\end{Example}
+
+\subsection{Supersolvable Groups Satisfy CLT}
+
+\begin{Definition}
+A \textit{chief series} of a group $G$ is a normal series \begin{center}$1=G_r\trianglelefteq\dotsi\trianglelefteq G_1=G$\end{center} such that for any $i$, there does not exist a proper subgroup $H$ between $G_i$ and $G_{i+1}$ where $H\trianglelefteq G$.
+\end{Definition}
+
+\begin{Lemma}\label{chief series}\cite[Corollary 10.5.2]{Hall} Suppose $G$ is finite and supersolvable of order $p_1p_2\dots p_r$, where $p_1\leq p_2\leq\dotsi\leq p_r$ are primes. Then $G$ has a chief series \begin{center}$1 = A_r\trianglelefteq A_r-1\trianglelefteq\dotsi\trianglelefteq A_0 = G$ \end{center}
+where each $A_{i-1}/A_i$ has order $p_i$.
+\end{Lemma}
+
+\begin{Lemma}\label{p group each div}\cite[Lemma 2]{Bray}
+Let $|G|=n=p_1^{a_1}\dotsc p_n^{a_n}$ such that $p_1<p_2<\dotsi <p_n$. If $G$ is supersolvable, then there exist normal subgroups of $G$ with orders $1,\;p_n,\;p_n^2,\dotsc,\;p_n^{a_n}$. 
+\end{Lemma}
+
+\begin{proof}
+Let $G$ be finite supersolvable. Let $|G|=p_1p_2\dotsi p_r$, where $p_1\leq p_2\leq\dotsi\leq p_r$. By \cref{chief series}, $G$ has chief series $A_0\geq A_1\geq\dotsi\geq A_r=1$, where $A_{i-1}/A_i$ has order $p_i$. Let $|G| = p_1^{a_1}\dots p_t^{a_t}$, where $p_1 <\dotsi < p_t$. Then we have
+\begin{center}
+    $|A_r| = 1 = p_t^0$\\
+    $|A_{r-1}/A_r|=p_t$, and so $|A_{r-1}|=p_t$ \\
+    $|A_{r-2}/A_{r-1}|=p_t$, and so $|A_{r-2}| = p_t^2$\\
+    $\vdots$\\
+    $|A_{r-a_t}/A_{r-(a_t-1)}| = p_t$, and so $|A_{r-a_t}|=p_t^{a_t}$
+\end{center}
+Since this is a chief series, each $A_i$ is normal in $G$.
+\end{proof}
+
+
+
+In \cref{clt then solvable}, we showed that all CLT groups are solvable, and that this is a proper containment. Now, we are ready for our next containment- that all supersolvable groups are CLT.
+
+\begin{Theorem}\label{supersolvable then clt}\cite[Theorem 2]{Bray} All supersolvable groups are CLT.
+\end{Theorem}
+
+\begin{proof}
+Assume $G$ is supersolvable. We will induct on the number of primes which divide $|G|$. If $|G|=1$, then this is trivial. If $|G|=p^a$, then $G$ is a p-group and is a CLT group, by \cref{p groups clt}. Assume $G$ is  CLT if $|G|=p_1^{a_1}\dotsc p_n^{a_n}$ for some $n$. Let $|G|=p_1^{a_1}\dotsc p_n^{a_n}p_{n+1}^{a_{n+1}}$, where $p_1<p_2<\dotsc <p_{n+1}$. As usual, suppose $d$ divides the order of $G$. Then $d=p_1^{b_1}\dotsc p_{n+1}^{a_{n+1}}=rp_{n+1}^{a_{n+1}}$, where $0\leq b_i\leq a_i$ and $r=p_1^{b_1}\dotsc p_n^{b_{n+1}}$. G is supersolvable, and hence solvable. Thus we can find a subgroup $H\leq G$ such that $|H|={|G|}/{p_{n+1}^{a_{n+1}}}=p_1^{a_1}\dotsc p_n^{a_n}$. Since $G$ is supersolvable, $H$ is supersolvable. By the induction hypothesis, $H$ is a CLT group since it has $n$ prime divisors. Since $r\mid |H|$, there is a subgroup $R\leq H$ of order $r$. So $R$ is a subgroup of $G$ with order $r$. Since $G$ is supersolvable, we may apply \cref{p group each div} to find $P\trianglelefteq G$ with $|P|=p_{n+1}^{b_{n+1}}$. Since $P$ is normal, $RP\leq G$. Also, since the orders of $R$ and $P$ are relatively prime, $|RP|=\cfrac{|R||P|}{|R\cap P|}=|R||P|=rp_{n+1}^{b_{n+1}}=d$. This shows that $G$ contains a subgroup of order $d$, and it follows that $G$ is a CLT group. 
+\end{proof}
+
+\begin{Example}
+ The converse is not true. Let $G$ be a CLT group. The group $A_4\times C_2$ is a CLT group, but not supersolvable. More generally, let $G$ be some CLT group. Then, by \cref{direct prod}, $(A_4\times C_2)\times G$ is also CLT. Note that $A_4\cong A_4\times \{e\}$ is not CLT. By \cref{supersolvable then clt}, $A_4$ is not supersolvable. It follows that $(A_4\times C_2)\times G$ is not supersolvable.
+\end{Example}
+Indeed, this sequence of group class containment extends to the following classes covered in Sections 1 and 3:
+
+\begin{center}
+    Cyclic $\subset$ Abelian $\subset$ Nilpotent $\subset$ Supersolvable $\subset$ CLT $\subset$ Solvable
+\end{center}
+\newpage
+%%%%%%%% Pinnock %%%%%%%%%%%%%
+
+\section{GROUPS OF ORDER $p^rq$}
+
+In the third section, we found the conditions for a group of order $p^2q$ to be CLT.
+
+
+\begin{Definition}
+Let $p$ be some prime. A group $G$ is \textit{strictly p-closed} if $G$ has a unique Sylow $p$-subgroup $P$ such that $G/P$ has exponent dividing $p-1$.
+\end{Definition}
+
+\begin{Definition} An abelian group $G$ is \textit{elementary abelian} if every nontrivial element has order $p$, where $p$ is prime.
+\end{Definition}
+
+Note that all elementary abelian groups are $p$-groups. The following lemmas are given by Pinnock in \cite{Pinnock}.
+
+\begin{Lemma}\label{min normal} let $G$ be finite and solvable. Then a minimal normal subgroup of $G$ is an elementary abelian subgroup for some prime $p$.
+\end{Lemma}
+
+\begin{Lemma}\label{abelian of exponent} Suppose $N$ is a minimal normal subgroup of a group $G$ such that $N$ is elementary abelian for some prime $p$. Then $|N|=p$ if and only if $G/C_G(N)$ is abelian of exponent dividing $p-1$.
+
+\end{Lemma}
+
+\begin{Definition}
+Let $N\trianglelefteq G$. If $N$ has a normal series whose terms are normal in $G$ and factors are cyclic, then $N$ is said to be \textit{G-supersolvable}.
+\end{Definition}
+
+\begin{Lemma}\label{super N and G/N} If $N\trianglelefteq G$ is $G$-supersolvable and $G/N$ is supersolvable, then $G$ itself is supersolvable. In particular, cyclic-by-supersolvable groups are supersolvable.
+
+\end{Lemma}
+
+\begin{Theorem}\label{strict p closed super}\cite[Proposition 4.4]{Pinnock}
+If $G$ is strictly $p$-closed for some prime $p$, then $G$ is supersolvable.
+\end{Theorem}
+
+\begin{proof}
+We will induct on the order of $G$. Assume $G$ is strictly $p$-closed and $S\in~\Syl_p(G)$. Consider $|S|=1$. Then $G/S$ is abelian of exponent dividing $p-1$. But $G\cong G/S$ is abelian, and so $G$ is supersolvable. So consider the case where $|S|\neq 1$. Let $Z$ be the center of $S$. Since $S$ is a $p$-group, by \cref{nontriv center} $Z$ is nontrivial. Also, since $Z$ is characteristic in $S$ and $S$ is normal in $G$, we have that $Z$ is normal in $G$. Thus $Z$ contains a minimal normal subgroup $N$ of $G$. Since $N$ is contained in the center of $S$, $S$ centralizes $N$. By \cref{min normal}, $N$ is elementary abelian for some prime $p$. Note that by assumption, $G/S$ is abelian of exponent dividing $p-1$. And so, by the Third Isomorphism Theorem, $G/C_G(N)\cong (G/S)/(C_G(N)/S)$ is abelian of exponent dividing $p-1$. By \cref{abelian of exponent}, $N$ is cyclic of order $p$. Since $N$ is nontrivial, $|G/N| <|G|$. Since $S$ is a $p$-group, it has order $p^n$, and so $|S/N|=p^{n-1}$. Since $S$ is normal in $G$, $S/N$ is normal in $G/N$. Hence $S/N$ is the unique Sylow $p$-subgroup of $G/N$. By the Third Isomorphism Theorem, $(G/N)/(S/N)\cong G/S$ is abelian of exponent dividing $p-1$ by the assumption. Hence $G/N$ is strictly $p$-closed. So by induction, $G/N$ is supersolvable. Since $N$ is cyclic, $G/N$ is cyclic-by-supersolvable. Hence $G$ is supersolvable.
+\end{proof}
+
+We will now obtain a result about CLT groups of order $p^rq$.
+
+\begin{Theorem}\label{p^rq clt} Let $G$ be a group of order $p^rq$, where $p$ and $q$ are primes such that $q$ divides $p-1$. Then $G$ is a CLT group.
+\end{Theorem}
+
+\begin{proof}
+Let $P\in\Syl_p(G)$. By Sylow's Theorem, $n_p\equiv 1 \mod p$. But $n_p$ divides $q$, which divides $p-1$. Hence we must have $n_p=1$, and so $P\trianglelefteq G$. Now, $|G/P| = q$ is cyclic, and so abelian. Also, the order of each element in $G/P$ divides $q$, which divides $p-1$. Thus $G/P$ has exponent dividing $p-1$. By \cref{strict p closed super}, $G$ is supersolvable. By \cref{supersolvable then clt}, $G$ is a CLT group.
+\end{proof}
+
+\begin{Example}
+In particular, all groups of order $2p^r$ are supersolvable, and so CLT.
+\end{Example}
+
+Note that this is not a generalization of \cref{p^2q}. For example, a group of order $3^2\cdot 5$ is a CLT group by that result. However, the order clearly does not meet the conditions for \cref{p^rq clt}, and so it does not apply here.
+
+
+\newpage
+\section{MORE RESULTS}
+\bigskip
+
+Previously, we showed that all groups of order $pq$ are CLT. We then gave conditions to guarantee that a group of order $p^2q$ is CLT and for a group of order $p^2q^2$ to not be CLT. Another natural step from $p^2q$, rather than squaring both primes, would be to consider groups of order $p^3q$. Marius T\u arn\u aceanu gives the following result. 
+
+\begin{Theorem}\label{p^3q}\cite[Theorem 1.1]{MT} Let $p$ and $q$ be primes. Then there exists a non-CLT group of order $p^3q$ if and only if $q$ divides $p+1$ or $q$ divides $p^2+p+1$.
+\end{Theorem}
+
+In \cref{p^2q^2}, the conditions we gave to guarantee a non-abelian group of order $p^2q^2$ (where $q<p$) to not be CLT were that $q$ be odd and $q$ divide $p+1$. However, there are equivalent conditions for this result.
+
+\begin{Theorem}\label{p^2q^2 equiv} \cite[pg 2]{Baskaran} Let $G$ be a non-abelian group of order $p^2q^2$, where $q<p$. Then $G$ is not CLT if and only if one of the following holds:\\
+{\singlespacing 
+\begin{enumerate}[nosep]
+    \item $q=2$, $p\equiv 3 \mod 4$, $G\cong (C_p\times C_p)\rtimes_\phi C_4$, and $\phi$ is one-to-one.
+    \item $G\cong K_4\rtimes_\phi C_9$ or $K_4\rtimes_\phi(C_3\times C_3)$, where $K_4$ is the Klein-four group.
+\end{enumerate}
+}
+\end{Theorem}
+
+We can generalize these order to groups of orders $p^aq^b$, where $p$ and $q$ are primes. Such groups are solvable by \cref{Burnside p^aq^b}. John Nganou extends this in \cite[pg 3]{CLT Numbers}. He defines a number $n$ to be a CLT number if every group of order $n$ is CLT. An example he gives unlike what we have covered in this thesis, are numbers of the form $p^mq^2$, where $p,q$ are primes and $q^2\mid p-1$.
+
+The result of \cref{nilpotent super clt} showed that if $G$ is a nilpotent group and $d$ divides $|G|$, then there exists a normal subgroup of $G$ of order $d$. And so nilpotent groups are strongly CLT. One may investigate if these are the only groups which satisfy this, or if it can be extended to a larger class.
+
+
+Finally, we end with an interesting result which gives conditions that guarantee a group to be CLT, regardless of order.
+
+\begin{Theorem}\label{commutator} \cite[Theorem 6]{Barry}
+Let $G$ be a finite group such that its commutator subgroup $G'$ is isomorphic to $A_4$. Then $G$ is CLT.
+\end{Theorem}
+
+\begin{Example}
+Consider the group $S_4$. $S_4/A_4\cong C_2$, and so $S_4'\leq A_4$. Now, take $(a\;b\;c)\in S_4$, where $a,b,c$ are distinct. Then \begin{center}$[(a\;b):(a\;c)] = (a\;b)(a\;c)(a\;b)(a\;c)=(a\;b\;c)$\end{center} is contained in $S_4'$. Since $A_4$ is generated by the 3-cycles of $S_4$, we have $A_4\leq S_4'$. And so the commutator subgroup of $S_4$ is $A_4$. As we showed earlier, $S_4$ is a CLT group.
+\end{Example}
+\newpage
+
+
+\section{CONCLUSION} In this thesis, we explored finite groups satisfying the converse to Lagrange's theorem. We investigated groups by their orders, namely groups with orders that are square-free or consisting of two prime factors. We also showed that there is a proper containment of supersolvable groups in CLT groups, and of CLT groups in solvable groups. Finally, we outlined other results which, amongst others, are worthy of further investigation.
+
+\newpage
+\addcontentsline{toc}{section}{REFERENCES}
+
+\begin{thebibliography}{50}  
+\setstretch{1}
+\bibitem{Barry} Barry, Fran: \textit{The commutator subgroup and CLT groups}, Mathematical Proceedings of the Royal Irish Academy, \textbf{104}, 119-126 (2004).
+
+\bibitem{Baskaran} Baskaran, Shyamsunder: \textit{CLT and non-CLT groups of order $p^2q^2$}, Fundamenta Mathematicae, \textbf{92}, 1-7 (1976).
+
+\bibitem{Bray} Bray, Henry: \textit{A note on CLT groups}, Pacific Journal of Mathematics, \textbf{27}, 229-231 (1968).
+
+\bibitem{Burnside} Burnside, William, \emph{Theory of Groups of Finite Order}, Dover, New York (1955).
+
+\bibitem{DF} Dummit, David, Foote, Richard, \emph{Abstract Algebra,} Wiley, Vermont, 2004.
+
+\bibitem{Hall} Hall, Marshall, \emph{The Theory of Groups}, Dover, New York (2018). 
+
+\bibitem{CLT Numbers} Nganoi, Jean: \textit{Converse of Lagrange's theorem (CLT) numbers under 1000}, Int. J. Group Theory 6, \textbf{2}, 37–42 (2017).
+
+\bibitem{Pinnock} Pinnock, Chris: \textit{Supersolubility and some characterizations of finite supersoluble groups, 2nd edition}, Available at http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.28.2482&rep=rep1&type=pdf, 1998.
+
+\bibitem{MT} T\u arn\u auceanu, Marius: \textit{Non-CLT groups of order $pq^3$}, Math. Slovaca, \textbf{64}, 311-314 (2014).
+
+
+\end{thebibliography}
+
+\end{document}
